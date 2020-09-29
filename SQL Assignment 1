@@ -1,0 +1,121 @@
+
+1.
+SELECT title FROM film f
+JOIN film_category fc ON f.film_id=fc.film_id
+JOIN category c ON c.category_id=fc.category_id
+WHERE c.name='Comedy' AND f.rating='PG-13';
++-------------------------+
+| title                   |
++-------------------------+
+| AIRPLANE SIERRA         |
+| ANTHEM LUKE             |
+| FLINTSTONES HAPPINESS   |
+| FREEDOM CLEOPATRA       |
+| GROUNDHOG UNCUT         |
+| KNOCK WARLOCK           |
+| PARADISE SABRINA        |
+| PERFECT GROOVE          |
+| RUSHMORE MERMAID        |
+| SADDLE ANTITRUST        |
+| STRICTLY SCARFACE       |
+| TRAINSPOTTING STRANGERS |
++-------------------------+
+
+
+
+2.
+SELECT title  FROM film f 
+JOIN inventory i ON f.film_id=i.film_id
+JOIN rental r ON r.inventory_id=i.inventory_id
+JOIN film_category fc ON fc.film_id=f.film_id
+JOIN category c ON c.category_id=fc.category_id
+WHERE c.name='horror' GROUP BY title
+ORDER BY COUNT(title) DESC LIMIT 3;
+
++--------------+
+| title        |
++--------------+
+| PULP BEVERLY |
+| FAMILY SWEET |
+| SWARM GOLD   |
++--------------+
+
+3.
+SELECT * FROM customer WHERE address_id IN (SELECT address_id FROM address WHERE city_id IN (SELECT city_id FROM city WHERE country_id IN (SELECT country_id FROM country WHERE country='India'))) AND customer_id IN (SELECT customer_id  FROM rental  WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE film_id IN (SELECT film_id FROM film_category WHERE category_id IN (SELECT category_id FROM category WHERE name='Sports'))));
++-------------+----------+------------+-------------+--------------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name   | email                                | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-------------+--------------------------------------+------------+--------+---------------------+---------------------+
+|         259 |        2 | LENA       | JENSEN      | LENA.JENSEN@sakilacustomer.org       |        264 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         358 |        2 | SAMUEL     | MARLOW      | SAMUEL.MARLOW@sakilacustomer.org     |        363 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         370 |        2 | WAYNE      | TRUONG      | WAYNE.TRUONG@sakilacustomer.org      |        375 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         367 |        1 | ADAM       | GOOCH       | ADAM.GOOCH@sakilacustomer.org        |        372 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         123 |        2 | SHANNON    | FREEMAN     | SHANNON.FREEMAN@sakilacustomer.org   |        127 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         554 |        1 | DWAYNE     | OLVERA      | DWAYNE.OLVERA@sakilacustomer.org     |        560 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         468 |        1 | TIM        | CARY        | TIM.CARY@sakilacustomer.org          |        473 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         274 |        1 | NAOMI      | JENNINGS    | NAOMI.JENNINGS@sakilacustomer.org    |        279 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|          78 |        1 | LORI       | WOOD        | LORI.WOOD@sakilacustomer.org         |         82 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         419 |        1 | CHAD       | CARBONE     | CHAD.CARBONE@sakilacustomer.org      |        424 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         356 |        2 | GERALD     | FULTZ       | GERALD.FULTZ@sakilacustomer.org      |        361 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         316 |        1 | STEVEN     | CURLEY      | STEVEN.CURLEY@sakilacustomer.org     |        321 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         502 |        1 | BRETT      | CORNWELL    | BRETT.CORNWELL@sakilacustomer.org    |        507 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         224 |        2 | PEARL      | GARZA       | PEARL.GARZA@sakilacustomer.org       |        228 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         271 |        1 | PENNY      | NEAL        | PENNY.NEAL@sakilacustomer.org        |        276 |      0 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         296 |        2 | RAMONA     | HALE        | RAMONA.HALE@sakilacustomer.org       |        301 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         508 |        2 | MILTON     | HOWLAND     | MILTON.HOWLAND@sakilacustomer.org    |        513 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|          68 |        1 | NICOLE     | PETERSON    | NICOLE.PETERSON@sakilacustomer.org   |         72 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         421 |        1 | LEE        | HAWKS       | LEE.HAWKS@sakilacustomer.org         |        426 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         426 |        1 | BRADLEY    | MOTLEY      | BRADLEY.MOTLEY@sakilacustomer.org    |        431 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         208 |        1 | LUCY       | WHEELER     | LUCY.WHEELER@sakilacustomer.org      |        212 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          15 |        1 | HELEN      | HARRIS      | HELEN.HARRIS@sakilacustomer.org      |         19 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         121 |        1 | JOSEPHINE  | GOMEZ       | JOSEPHINE.GOMEZ@sakilacustomer.org   |        125 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         231 |        1 | GEORGIA    | JACOBS      | GEORGIA.JACOBS@sakilacustomer.org    |        235 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         403 |        1 | MIKE       | WAY         | MIKE.WAY@sakilacustomer.org          |        408 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         175 |        1 | ANNETTE    | OLSON       | ANNETTE.OLSON@sakilacustomer.org     |        179 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         167 |        2 | SALLY      | PIERCE      | SALLY.PIERCE@sakilacustomer.org      |        171 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         209 |        2 | TONYA      | CHAPMAN     | TONYA.CHAPMAN@sakilacustomer.org     |        213 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          60 |        1 | MILDRED    | BAILEY      | MILDRED.BAILEY@sakilacustomer.org    |         64 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         336 |        1 | JOSHUA     | MARK        | JOSHUA.MARK@sakilacustomer.org       |        341 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         446 |        2 | THEODORE   | CULP        | THEODORE.CULP@sakilacustomer.org     |        451 |      0 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         268 |        1 | NINA       | SOTO        | NINA.SOTO@sakilacustomer.org         |        273 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         135 |        2 | JUANITA    | MASON       | JUANITA.MASON@sakilacustomer.org     |        139 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          59 |        1 | CHERYL     | MURPHY      | CHERYL.MURPHY@sakilacustomer.org     |         63 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         192 |        1 | LAURIE     | LAWRENCE    | LAURIE.LAWRENCE@sakilacustomer.org   |        196 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         117 |        1 | EDITH      | MCDONALD    | EDITH.MCDONALD@sakilacustomer.org    |        121 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          32 |        1 | AMY        | LOPEZ       | AMY.LOPEZ@sakilacustomer.org         |         36 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         136 |        2 | ANITA      | MORALES     | ANITA.MORALES@sakilacustomer.org     |        140 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         412 |        2 | ALLEN      | BUTTERFIELD | ALLEN.BUTTERFIELD@sakilacustomer.org |        417 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         297 |        1 | SHERRI     | RHODES      | SHERRI.RHODES@sakilacustomer.org     |        302 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|          12 |        1 | NANCY      | THOMAS      | NANCY.THOMAS@sakilacustomer.org      |         16 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         225 |        1 | ARLENE     | HARVEY      | ARLENE.HARVEY@sakilacustomer.org     |        229 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         440 |        1 | BERNARD    | COLBY       | BERNARD.COLBY@sakilacustomer.org     |        445 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         300 |        1 | JOHN       | FARNSWORTH  | JOHN.FARNSWORTH@sakilacustomer.org   |        305 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|          95 |        2 | PAULA      | BRYANT      | PAULA.BRYANT@sakilacustomer.org      |         99 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          28 |        1 | CYNTHIA    | YOUNG       | CYNTHIA.YOUNG@sakilacustomer.org     |         32 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         379 |        1 | CARLOS     | COUGHLIN    | CARLOS.COUGHLIN@sakilacustomer.org   |        384 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         170 |        1 | BEATRICE   | ARNOLD      | BEATRICE.ARNOLD@sakilacustomer.org   |        174 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         534 |        1 | CHRISTIAN  | JUNG        | CHRISTIAN.JUNG@sakilacustomer.org    |        540 |      0 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         186 |        2 | HOLLY      | FOX         | HOLLY.FOX@sakilacustomer.org         |        190 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-------------+--------------------------------------+------------+--------+---------------------+---------------------+
+
+
+4.
+SELECT * FROM customer WHERE address_id IN (SELECT address_id FROM address WHERE city_id IN (SELECT city_id FROM city WHERE country_id IN (SELECT country_id FROM country WHERE country='Canada'))) AND customer_id IN (SELECT customer_id  FROM rental  WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE film_id IN (SELECT film_id FROM film_actor WHERE actor_id IN (SELECT actor_id FROM actor WHERE first_name='NICK' AND last_name='WAHLBERG'))));
++-------------+----------+------------+-----------+--------------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                                | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+--------------------------------------+------------+--------+---------------------+---------------------+
+|         189 |        1 | LORETTA    | CARPENTER | LORETTA.CARPENTER@sakilacustomer.org |        193 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|         463 |        2 | DARRELL    | POWER     | DARRELL.POWER@sakilacustomer.org     |        468 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+--------------------------------------+------------+--------+---------------------+---------------------+
+
+5.
+SELECT count(title) AS no_of_movies FROM film f 
+JOIN  film_actor fa ON f.film_id=fa.film_id  
+JOIN actor a ON a.actor_id=fa.actor_id  
+WHERE a.first_name='SEAN' AND a.last_name='WILLIAMS';
++--------------+
+| no_of_movies |
++--------------+
+|           26 |
++--------------+
+
+	
